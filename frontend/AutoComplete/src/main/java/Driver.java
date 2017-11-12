@@ -17,61 +17,66 @@ public class Driver {
 	public static void main(String[] args) throws ClassNotFoundException, IOException, InterruptedException {
 		//job1
 		Configuration conf1 = new Configuration();
-		conf1.set("textinputformat.record.delimiter", ".");
-		conf1.set("noGram", args[2]);
-		
-		Job job1 = Job.getInstance();
-		job1.setJobName("NGram");
+		//conf1.set("textinputformat.record.delimiter", ".");
+		DBConfiguration.configureDB(conf1,
+				"com.mysql.jdbc.Driver",
+				"jdbc:mysql://10.136.82.208:8889/movie",
+				"root",
+				"root");
+
+		Job job1 = Job.getInstance(conf1, "NGram");
 		job1.setJarByClass(Driver.class);
-		
+		job1.addArchiveToClassPath(new Path("/mysql/mysql-connector-java-5.1.39-bin.jar"));
+
 		job1.setMapperClass(NGramLibraryBuilder.NGramMapper.class);
 		job1.setReducerClass(NGramLibraryBuilder.NGramReducer.class);
-		
-		job1.setOutputKeyClass(Text.class);
-		job1.setOutputValueClass(IntWritable.class);
-		
+		job1.setMapOutputKeyClass(Text.class);
+		job1.setMapOutputValueClass(Text.class);
+		job1.setOutputKeyClass(DBOutputWritable.class);
+		job1.setOutputValueClass(NullWritable.class);
 		job1.setInputFormatClass(TextInputFormat.class);
-		job1.setOutputFormatClass(TextOutputFormat.class);
-		
+		job1.setOutputFormatClass(DBOutputFormat.class);
+
+		DBOutputFormat.setOutput(job1, "output", new String[] {"starting_phrase", "following_word", "count"});
 		TextInputFormat.setInputPaths(job1, new Path(args[0]));
-		TextOutputFormat.setOutputPath(job1, new Path(args[1]));
 		job1.waitForCompletion(true);
-		
+
 		//how to connect two jobs?
 		// last output is second input
-		
+
 		//2nd job
-		Configuration conf2 = new Configuration();
+		/*Configuration conf2 = new Configuration();
 		conf2.set("threashold", args[3]);
 		conf2.set("n", args[4]);
-		
-		DBConfiguration.configureDB(conf2, 
+
+		DBConfiguration.configureDB(conf2,
 				"com.mysql.jdbc.Driver",
-				"jdbc:mysql://ip_address:port/test",
+				"jdbc:mysql://localhost:8889/test",
 				"root",
-				"password");
-		
+				"root");
+
 		Job job2 = Job.getInstance(conf2);
 		job2.setJobName("Model");
 		job2.setJarByClass(Driver.class);
-		
-		job2.addArchiveToClassPath(new Path("path_to_ur_connector"));
+
+		job2.addArchiveToClassPath(new Path("mysql-connector-java-5.1.39-bin.jar"));
 		job2.setMapOutputKeyClass(Text.class);
 		job2.setMapOutputValueClass(Text.class);
-		job2.setOutputKeyClass(DBOutputWritable.class);
-		job2.setOutputValueClass(NullWritable.class);
-		
+		job2.setOutputKeyClass(Text.class);
+		job2.setOutputValueClass(Text.class);
 		job2.setMapperClass(LanguageModel.Map.class);
 		job2.setReducerClass(LanguageModel.Reduce.class);
-		
+
 		job2.setInputFormatClass(TextInputFormat.class);
-		job2.setOutputFormatClass(DBOutputFormat.class);
-		
-		DBOutputFormat.setOutput(job2, "output", 
-				new String[] {"starting_phrase", "following_word", "count"});
+		job2.setOutputFormatClass(TextOutputFormat.class);
+		//job2.setOutputFormatClass(DBOutputFormat.class);
+
+		//DBOutputFormat.setOutput(job2, "output",
+		//		new String[] {"starting_phrase", "following_word", "count"});
 
 		TextInputFormat.setInputPaths(job2, args[1]);
-		job2.waitForCompletion(true);
+		TextOutputFormat.setOutputPath(job2, new Path(args[5]));
+*/
 	}
 
 }

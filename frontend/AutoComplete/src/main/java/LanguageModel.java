@@ -28,7 +28,7 @@ public class LanguageModel {
 			threashold = conf.getInt("threashold", 20);
 		}
 
-		
+
 		@Override
 		public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
 			if((value == null) || (value.toString().trim()).length() == 0) {
@@ -36,19 +36,19 @@ public class LanguageModel {
 			}
 			//this is cool\t20
 			String line = value.toString().trim();
-			
+
 			String[] wordsPlusCount = line.split("\t");
 			if(wordsPlusCount.length < 2) {
 				return;
 			}
-			
+
 			String[] words = wordsPlusCount[0].split("\\s+");
 			int count = Integer.valueOf(wordsPlusCount[1]);
-			
+
 			if(count < threashold) {
 				return;
 			}
-			
+
 			//this is --> cool = 20
 			StringBuilder sb = new StringBuilder();
 			for(int i = 0; i < words.length-1; i++) {
@@ -56,15 +56,15 @@ public class LanguageModel {
 			}
 			String outputKey = sb.toString().trim();
 			String outputValue = words[words.length - 1];
-			
+
 			if(!((outputKey == null) || (outputKey.length() <1))) {
 				context.write(new Text(outputKey), new Text(outputValue + "=" + count));
 			}
 		}
 	}
 
-	public static class Reduce extends Reducer<Text, Text, DBOutputWritable, NullWritable> {
-
+	//public static class Reduce extends Reducer<Text, Text, DBOutputWritable, NullWritable> {
+	public static class Reduce extends Reducer<Text, Text, Text, Text> {
 		int n;
 		// get the n parameter from the configuration
 		@Override
@@ -75,7 +75,7 @@ public class LanguageModel {
 
 		@Override
 		public void reduce(Text key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
-			
+
 			//this is, <girl = 50, boy = 60>
 			TreeMap<Integer, List<String>> tm = new TreeMap<Integer, List<String>>(Collections.reverseOrder());
 			for(Text val: values) {
@@ -97,7 +97,8 @@ public class LanguageModel {
 				int keyCount = iter.next();
 				List<String> words = tm.get(keyCount);
 				for(String curWord: words) {
-					context.write(new DBOutputWritable(key.toString(), curWord, keyCount),NullWritable.get());
+					context.write(key, new Text(curWord));
+					//context.write(new DBOutputWritable(key.toString(), curWord, keyCount),NullWritable.get());
 					j++;
 				}
 			}
