@@ -29,8 +29,8 @@ public class NGramLibraryBuilder {
 			//how to build n-gram based on array of words?
 			String movie_name = strs[1];
 			//context.write(new Text(movie_name.substring(0,2)), new Text(movie_name));
-			int start = Math.min(3, movie_name.length() - 1);
-			int end = Math.min(10, movie_name.length() - 1);
+			int start = Math.min(1, movie_name.length() - 1);
+			int end = Math.min(9, movie_name.length() - 1);
 			for(int i = start; i < end; i++){
 			    String starting_phrase = movie_name.substring(0,i);
 				context.write(new Text(starting_phrase), new Text(movie_name));
@@ -48,7 +48,7 @@ public class NGramLibraryBuilder {
 				if (num > 5){
 					break;
 				}
-				context.write(new DBOutputWritable(key.toString(), value.toString(), 1), NullWritable.get());
+				context.write(new DBOutputWritable(key.toString().trim(), value.toString().trim(), 1), NullWritable.get());
 				num++;
 			}
 		}

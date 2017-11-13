@@ -35,7 +35,7 @@ body {
 }
 .footer {
 	padding: 10px;
-	text-align: right;
+	text-align: left;
 }
 .footer a {
 	color: #999999;
@@ -85,7 +85,7 @@ body {
 .input_container ul li:hover {
 	background: #eaeaea;
 }
-#country_list_id {
+#movie_list_id {
 	display: none;
 }
 
