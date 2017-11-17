@@ -10,6 +10,7 @@ function connect() {
 
 $pdo = connect();
 $keyword = $_POST['keyword'];
+$movie_id = $_POST['movie_id'];
 $sql = "SELECT * FROM outputtmp WHERE starting_phrase like (:keyword) ORDER BY count DESC LIMIT 0, 10";
 $query = $pdo->prepare($sql);
 $query->bindParam(':keyword', $keyword, PDO::PARAM_STR);
