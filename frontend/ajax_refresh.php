@@ -21,7 +21,9 @@ foreach ($list as $rs) {
 	//$movie_name = str_replace($_POST['keyword'], '<b>'.$_POST['keyword'].'</b>', $rs['following_word']);
 	$predictor = $rs['following_word'];
 	// add new option
-    echo '<li onclick="set_item(\''.str_replace("'", "\'", $rs['following_word']).'\')">'.$predictor.'</li>';
+    //echo '<li onclick="set_item(\''.str_replace("'", "\'", $rs['following_word']).'\','.$movie_id.')">'.$predictor.'</li>';
+    echo '<li onclick="set_item(\''.str_replace("'", "\'", $rs['following_word']).'\',\''.$movie_id.'\')">'.$predictor.'</li>';
     //echo '<li onclick="set_item(\''.str_replace("'", "\'", $rs['following_word']).'\')">'.$keyword.'</li>';
+
 }
 ?>
