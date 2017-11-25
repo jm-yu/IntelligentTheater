@@ -14,18 +14,6 @@
         <img src = "images/harry-potter-wallpaper.jpg" alt = "wallpaper" width="600" height="300"/>
     </div>
     <h1 class = "main_title"> Movie recommendation </h1>
-    <form action="welcome.php" method="post">
-    movie_id: <input type="text" name="name"><br>
-    ratings: <select name="ratings">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                </select>
-    <br>            
-    <input type="submit">
-    </form>
     <div class = "content">
         <form action = "welcome.php" method = "post">
             <div class="label_div">Type a movie name: </div>
@@ -48,12 +36,12 @@
             <br>
             <div class="label_div">Type a movie name: </div>
             <div class="input_container">
-                <input type="text" id="movie_id_2">
+                <input type="text" id="movie_id_2" name = "movie_id_2">
                 <ul id="list_movie_id_2"></ul>
             </div>
             <div class="label_rating_div">choose a rating:</div>
             <div class="input_container">
-                <select name="ratings">
+                <select name="ratings_2">
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
