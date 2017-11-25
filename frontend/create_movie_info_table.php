@@ -1,4 +1,7 @@
+
+
 <?php
+//this script is to create a table which contains movie_id and movie_name information.
 $servername = "localhost";
 $username = "root";
 $password = "root";
@@ -11,13 +14,20 @@ try{
 	//$conn->exec($sql);
 	//$conn->exec("select * from outputtmp where starting_phrase like 'a' ");
 	
-	$myfile = fopen("resources/m.csv", "r") or die("unable to open file");
+	$myfile = fopen("resources/movies.csv", "r") or die("unable to open file");
 	$data = fgetcsv($myfile, 1000, ",");
 	$data = fgetcsv($myfile, 1000, ",");
 	while (($data = fgetcsv($myfile, 1000, ",")) != FALSE){
 		$id = $data[0];
 		$name = $data[1];
-		echo $id."\t".$name."\n\n";
+		//echo $id."\t".$name."\n\n";
+		$sql = "INSERT INTO movie_info_test (movie_id, movie_name) VALUES(\"".$id."\",\"".addslashes($name)."\")";
+		if ($conn->query($sql) == TRUE){
+			echo "New record created";
+		} else {
+			echo "ERROR: ".$sql."<br>".$conn->error;
+		}
+		echo $sql."<br>";
 		//echo var_dump($id);
 	}
 	fclose($myfile);
@@ -27,7 +37,7 @@ try{
 	$query->execute();
 	$list = $query->fetchAll();
 	echo var_dump($list);*/
-	echo "success1";
+	$conn->close();
 }
 catch(PDOException $e){
 	echo $sql."<br>".$e->getMessage();
