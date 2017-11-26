@@ -1,5 +1,3 @@
-
-
 <?php
 //this script is to create a table which contains movie_id and movie_name information.
 $servername = "localhost";
@@ -21,7 +19,7 @@ try{
 		$id = $data[0];
 		$name = $data[1];
 		//echo $id."\t".$name."\n\n";
-		$sql = "INSERT INTO movie_info_test (movie_id, movie_name) VALUES(\"".$id."\",\"".addslashes($name)."\")";
+		$sql = "INSERT INTO movie_info (movie_id, movie_name) VALUES(\"".$id."\",\"".addslashes($name)."\")";
 		if ($conn->query($sql) == TRUE){
 			echo "New record created";
 		} else {
