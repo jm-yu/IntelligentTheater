@@ -39,12 +39,17 @@ foreach ($list as $fields) {
 	fputcsv($myfile, $fields);
 }
 fclose($myfile);
+
+#$commend = "python NeuMF.py --mode predict --dataset ml-1m --epochs 20 --batch_size 256 --num_factors 8 --layers [64,32,16,8] --reg_mf 0 --reg_layers [0,0,0,0] --num_neg 4 --lr 0.001 --learner adam --verbose 1 --out 1";
+#exec($command);
+
 sleep(3);
 $output = fopen("resources/rank.txt", "r");
 $ranks = fgets($output);
 $ranks = str_replace("[", "", $ranks);
 $ranks = str_replace("]", "", $ranks);
 $ranks = explode(",", $ranks);
+$idx = 1;
 foreach ($ranks as $rank){
 	try{
 		$sql = "SELECT movie_name FROM movie_info_test WHERE movie_id = '".trim($rank)."'";
@@ -52,7 +57,8 @@ foreach ($ranks as $rank){
 		$query = $conn->prepare($sql);
 		$query->execute();
 		$list = $query->fetchAll();
-		echo $list[0][0]."<br>";
+		echo "<p>".$idx."\t".$list[0][0]."</p><br>";
+		$idx = $idx + 1;
 	}
 	catch(PDOException $e){
 		echo $sql."<br>".$e->getMessage();

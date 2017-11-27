@@ -50,5 +50,4 @@ function set_item(item, id1) {
 	//alert(movie_id_set);
 	// hide proposition list
 	$(set_list_movie_id).hide();
-
 }
