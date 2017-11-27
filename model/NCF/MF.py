@@ -9,7 +9,7 @@ from scipy.sparse.linalg import svds
 def parse_args():
     parser = argparse.ArgumentParser(description="Run MF.")
     parser.add_argument('--mode', nargs='?', default='predict',
-                        help='train or predict?')
+                        help='eval or predict?')
     return parser.parse_args()
 
 def recommend_movies(predictions_df, userID, movies_df, original_ratings_df, num_recommendations=5):
