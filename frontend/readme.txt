@@ -1,6 +1,7 @@
-Author : Ali Aboussebaba
-Source from : http://www.bewebdeveloper.com
-Subject : PHP MVC example
+This is a webpage presenting results of Intelligent Theater.
 
-To explore the full tutorial about this source, go to:
+
+
+
+reference
 http://www.bewebdeveloper.com/tutorial-about-autocomplete-using-php-mysql-and-jquery
