@@ -27,7 +27,6 @@ $myfile = fopen("resources/test.csv", "w");
 
 $list = array(
 	array(getID(addslashes($_POST["movie_id_1"]),$conn), $_POST["ratings_1"]),
-	array($_POST["movie_id_2"], $_POST["ratings_2"]),
 	array(getID(addslashes($_POST["movie_id_2"]),$conn), $_POST["ratings_2"]),
 	array(getID(addslashes($_POST["movie_id_3"]),$conn), $_POST["ratings_3"]),
 	array(getID(addslashes($_POST["movie_id_4"]),$conn), $_POST["ratings_4"]),
@@ -40,7 +39,7 @@ foreach ($list as $fields) {
 	fputcsv($myfile, $fields);
 }
 fclose($myfile);
-
+sleep(3);
 $output = fopen("resources/rank.txt", "r");
 $ranks = fgets($output);
 $ranks = str_replace("[", "", $ranks);
