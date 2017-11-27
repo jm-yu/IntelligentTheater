@@ -35,7 +35,7 @@ body {
 }
 .footer {
 	padding: 10px;
-	text-align: right;
+	text-align: left;
 }
 .footer a {
 	color: #999999;
@@ -55,18 +55,18 @@ body {
 }
 .input_container input {
 	height: 20px;
-	width: 200px;
+	width: 260px;
 	padding:2px;
-	border: 1px solid #cccccc;
-	border-radius: 0;
 }
 .input_container ul {
 	width: 206px;
-	border: 1px solid #eaeaea;
 	position: absolute;
-	z-index: 9;
 	background: #f3f3f3;
 	list-style: none;
+}
+.input_container li {
+	height: 15px;
+	overflow: hidden;
 }
 .input_container select{
 	width: 120px;
@@ -85,7 +85,7 @@ body {
 .input_container ul li:hover {
 	background: #eaeaea;
 }
-#country_list_id {
+#movie_list_id {
 	display: none;
 }
 

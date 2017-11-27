@@ -1,2 +1,4 @@
 # IntelligentTheater
-a movie recommendation project for cloud computing class
+a movie recommendation project 
+
+front end + tensorflow + sql + php
