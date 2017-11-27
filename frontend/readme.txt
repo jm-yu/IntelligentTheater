@@ -1,8 +1,6 @@
-This is a webpage presenting results of Intelligent Theater.
+Author : Ali Aboussebaba
+Source from : http://www.bewebdeveloper.com
+Subject : PHP MVC example
 
-http://10.136.16.157:8888/movie_recommendation/ 
-(If this link does not work. please contact jmyu1994@ufl.edu)
-(It is running on my machine...and my IP changes 😓…)
-
-reference
+To explore the full tutorial about this source, go to:
 http://www.bewebdeveloper.com/tutorial-about-autocomplete-using-php-mysql-and-jquery
