@@ -23,7 +23,7 @@ function getID($movie_name, $conn){
 		echo $sql."<br>".$e->getMessage();
 	}
 }
-$myfile = fopen("resources/test.csv", "w");
+$myfile = fopen("/Applications/MAMP/htdocs/movie_recommendation/resources/test.csv", "w");
 
 $list = array(
 	array(getID(addslashes($_POST["movie_id_1"]),$conn), $_POST["ratings_1"]),
@@ -39,12 +39,17 @@ foreach ($list as $fields) {
 	fputcsv($myfile, $fields);
 }
 fclose($myfile);
-
-#$commend = "python NeuMF.py --mode predict --dataset ml-1m --epochs 20 --batch_size 256 --num_factors 8 --layers [64,32,16,8] --reg_mf 0 --reg_layers [0,0,0,0] --num_neg 4 --lr 0.001 --learner adam --verbose 1 --out 1";
-#exec($command);
-
-//sleep(3);
-$output = fopen("resources/rank.txt", "r");
+//$commend0 = ""
+//$commend0 = "rm /Applications/MAMP/htdocs/movie_recommendation/resources/rank.txt";
+//exec($commend0);
+//sleep(1.0);
+//echo exec("ls -a");
+//sleep(1.0);
+//$commend2 = "cd /Applications/MAMP/htdocs/movie_recommendation/neural_collaborative_filtering-master && python NeuMF_latest.py --mode predict --dataset ml-1m --epochs 20 --batch_size 256 --num_factors 8 --layers [64,32,16,8] --reg_mf 0 --reg_layers [0,0,0,0] --num_neg 4 --lr 0.001 --learner adam --verbose 1 --out 1";
+//exec($command2);
+//echo "1";
+sleep(5);
+$output = fopen("/Applications/MAMP/htdocs/movie_recommendation/resources/rank.txt", "r");
 $ranks = fgets($output);
 $ranks = str_replace("[", "", $ranks);
 $ranks = str_replace("]", "", $ranks);
@@ -57,7 +62,9 @@ foreach ($ranks as $rank){
 		$query = $conn->prepare($sql);
 		$query->execute();
 		$list = $query->fetchAll();
-		echo "<li>".$list[0][0]."</li>";
+		echo "<p>".$list[0][0]."</p>";
+		/*echo "<li>".$list[0][0]."</li>";*/
+
 		$idx = $idx + 1;
 	}
 	catch(PDOException $e){

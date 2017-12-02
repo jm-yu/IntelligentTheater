@@ -22,7 +22,7 @@ $(document).ready(function(){
 			$(list_id).hide();
 		}
 	});
-	$('#submit_btn').click(function() {
+	/*$('#submit_btn').click(function() {
 		// body...
 		var url = "welcome.php";
 		//alert("2");
@@ -38,7 +38,7 @@ $(document).ready(function(){
          });
 
     	return false; 
-	});
+	});*/
 });
 /*function autocomplet() {
 	var min_length = 0; // min caracters to display the autocomplete
