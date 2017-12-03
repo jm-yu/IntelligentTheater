@@ -19,6 +19,16 @@ body {
 	margin: auto;
 	text-align: left;
 }
+.container1 {
+	height: 500px;
+	width: 50%;
+	background: #ff0000;
+}
+.container2 {
+	height: 500px;
+	width: 50%;
+	background: #00ff00;
+}
 .header {
 	padding: 10px;
 }

@@ -22,6 +22,23 @@ $(document).ready(function(){
 			$(list_id).hide();
 		}
 	});
+	/*$('#submit_btn').click(function() {
+		// body...
+		var url = "welcome.php";
+		//alert("2");
+		$.ajax({
+           type: "POST",
+           url: url,
+           data: $("#user_rating_form").serialize(), // serializes the form's elements.
+           success: function(data)
+           {
+           		$('#ranks').show();
+                $('#ranks').html(data); // show response from the php script.
+           }
+         });
+
+    	return false; 
+	});*/
 });
 /*function autocomplet() {
 	var min_length = 0; // min caracters to display the autocomplete

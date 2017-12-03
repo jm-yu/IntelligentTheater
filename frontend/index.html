@@ -1,6 +1,6 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
-<html lang="en" xmlns="http://www.w3.org/1999/html">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="css/style.css" />
@@ -15,7 +15,7 @@
     </div>
     <h1 class = "main_title"> Movie recommendation </h1>
     <div class = "content">
-        <form action = "welcome.php" method = "post">
+        <form id = "user_rating_form" action = "welcome.php" method="post">
             <div class="label_div">Type a movie name: </div>
             <div class="input_container">
                 <input type="text" id="movie_id_1" name="movie_id_1">
@@ -106,10 +106,12 @@
             <br>
             <br>
             <br>
-            <input type="submit" name = "submit_btn"></input>
+            <input type="submit" id = "submit_btn" name = "submit_btn" value="Recommend for me"></input>
         </form>
     </div>
-    <ul id = "ranks"><ul>
+    <div class="input_container">
+        <ul id = "ranks"><ul>
+    </div>
 </div>
 </body>
 </html>
