@@ -4,9 +4,8 @@ $(document).ready(function(){
     
 	$("#submit").click(function(){
 
-		var username = $("myusername").val();
-		var password = $("mypassword").val();
-
+		var username = $("#myusername").val();
+		var password = $("#mypassword").val();
 		if((username == "") || (password == "")) {
       		$("#message").html("<div class=\"alert alert-danger alert-dismissable\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button>Please enter a username and a password</div>");
     	} else {
@@ -14,16 +13,16 @@ $(document).ready(function(){
         		type: "POST",
         		url: "checklogin.php",
         		data: "myusername="+username+"&mypassword="+password,
-        		success: function(html){    
+        		success: function(html){
           			if(html=='true') {
             			window.location="index.php";
           			} else {
             			$("#message").html(html);
           			}
-        		},
+        		}/*,
         		beforeSend:function(){
           			$("#message").html("<p class='text-center'><img src='images/ajax-loader.gif'></p>")
-        		}
+        		}*/
       		});
     	}
     	return false;
@@ -48,12 +47,4 @@ $(document).ready(function(){
 }*/
 
 // set_item : this function will be executed when we select an item
-function set_item(item, id1) {
-	// change input value
-	var set_movie_id = "#" + id1;
-	var set_list_movie_id = "#list_" + id1;
-	$(set_movie_id).val(item);
-	//alert(movie_id_set);
-	// hide proposition list
-	$(set_list_movie_id).hide();
-}
+

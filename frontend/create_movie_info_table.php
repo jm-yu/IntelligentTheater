@@ -1,5 +1,7 @@
+
 <?php
 //this script is to create a table which contains movie_id and movie_name information.
+
 $servername = "localhost";
 $username = "root";
 $password = "root";
