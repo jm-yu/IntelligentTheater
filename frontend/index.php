@@ -15,7 +15,7 @@
     </div>
     <h1 class = "main_title"> Movie recommendation </h1>
     <div class = "content">
-        <form id = "user_rating_form" action = "welcome.php" method="post">
+        <form id = "user_rating_form" action = "user_submit.php" method="post">
             <div class="label_div">Type a movie name: </div>
             <div class="input_container">
                 <input type="text" id="movie_id_1" name="movie_id_1">

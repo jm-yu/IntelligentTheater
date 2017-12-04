@@ -2,6 +2,21 @@
 	margin: 0;
 	padding: 0;
 }
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
 body {
 	padding: 10px;
 	background: #eaeaea;
@@ -65,17 +80,18 @@ body {
 }
 .input_container input {
 	height: 20px;
-	width: 260px;
+	width: 300px;
 	padding:2px;
 }
 .input_container ul {
-	width: 206px;
+	width: 300px;
 	position: absolute;
 	background: #f3f3f3;
 	list-style: none;
 }
 .input_container li {
 	height: 15px;
+	width: 300px;
 	overflow: hidden;
 }
 .input_container select{

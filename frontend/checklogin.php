@@ -13,7 +13,7 @@ try{
 	$conn = new PDO("mysql:host=".$host.";dbname=".$db_name.";charset=utf8", $username, $password);
 	$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	//$sql = "CREATE DATABASE myDB";
-	$sql = "SELECT * FROM user_info WHERE username='".$myusername."' and password='".$mypassword."'";
+	$sql = "SELECT * FROM user_table WHERE username='".$myusername."' and password='".$mypassword."'";
 	//echo $sql;
 	$stmt = $conn->query($sql);
 	$count = $stmt->rowCount();
@@ -29,8 +29,8 @@ catch(PDOException $e){
 if($count == 1){
 		// Register $myusername, $mypassword and print "true"
 	echo "true";
-	$_SESSION['username'] = 'myusername';
-	$_SESSION['password'] = 'mypassword';		
+	$_SESSION['username'] = $myusername;
+	$_SESSION['password'] = $mypassword;		
 } else {
 	//return the error message
 	echo "<div class=\"alert alert-danger alert-dismissable\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button>Wrong Username or Password</div>";
