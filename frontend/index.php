@@ -1,117 +1,72 @@
+<?php
+    session_start();
+    if (isset($_SESSION['username'])) {
+        header("./index.html");
+   }
+?>
 <!DOCTYPE html>
-
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/login.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="js/script.js"></script>
+    <script src="js/login_script.js"></script>
 
 </head>
 <body>
-<div class = "container">
-    <div class = "header">
-        <img src = "images/harry-potter-wallpaper.jpg" alt = "wallpaper" width="600" height="300"/>
+<!-- Button to open the modal login form -->
+<h2>Movie recommendation</h2>
+<span align="left">
+<button class = "button1" onclick="document.getElementById('id01').style.display='block'">Login</button>
+</span>
+<span align="right">
+<button class = "button1" onclick="document.getElementById('id02').style.display='block'">Sign up</button>
+</span>
+<!-- The Modal -->
+<div id="id01" class="modal">
+  <span onclick="document.getElementById('id01').style.display='none'" 
+class="close" title="Close Modal">&times;</span>
+
+  <!-- Modal Content -->
+  <form class="modal-content animate">
+    <div class="container">
+      <label><b>Username</b></label>
+      <input type="text" id="myusername" placeholder="Enter Username" name="myusername" required>
+
+      <label><b>Password</b></label>
+      <input id="mypassword" type="password" placeholder="Enter Password" name="mypassword" required>  
+
+      <div id="message"></div>
+      <div class="clearfix">
+        <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+        <button id = "login_submit" type="submit" class = "loginbtn">Login</button>
+      </div>
     </div>
-    <h1 class = "main_title"> Movie recommendation </h1>
-    <div class = "content">
-        <form id = "user_rating_form" action = "user_submit.php" method="post">
-            <div class="label_div">Type a movie name: </div>
-            <div class="input_container">
-                <input type="text" id="movie_id_1" name="movie_id_1">
-                <ul id="list_movie_id_1"></ul>
-            </div>
-            <div class="label_rating_div">choose a rating:</div>
-            <div class="input_container">
-                <select name="ratings_1">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                </select>
-            </div>
-            <br>
-            <br>
-            <br>
-            <div class="label_div">Type a movie name: </div>
-            <div class="input_container">
-                <input type="text" id="movie_id_2" name = "movie_id_2">
-                <ul id="list_movie_id_2"></ul>
-            </div>
-            <div class="label_rating_div">choose a rating:</div>
-            <div class="input_container">
-                <select name="ratings_2">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                </select>
-            </div>
-            <br>
-            <br>
-            <br>
-            <div class="label_div">Type a movie name: </div>
-            <div class="input_container">
-                <input type="text" id="movie_id_3" name = "movie_id_3">
-                <ul id="list_movie_id_3"></ul>
-            </div>
-            <div class="label_rating_div">choose a rating:</div>
-            <div class="input_container">
-                <select name="ratings_3">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                </select>
-            </div>
-             <br>
-            <br>
-            <br>
-            <div class="label_div">Type a movie name: </div>
-            <div class="input_container">
-                <input type="text" id="movie_id_4" name = "movie_id_4">
-                <ul id="list_movie_id_4"></ul>
-            </div>
-            <div class="label_rating_div">choose a rating:</div>
-            <div class="input_container">
-                <select name="ratings_4">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                </select>
-            </div>
-             <br>
-            <br>
-            <br>
-            <div class="label_div">Type a movie name: </div>
-            <div class="input_container">
-                <input type="text" id="movie_id_5" name = "movie_id_5">
-                <ul id="list_movie_id_5"></ul>
-            </div>
-            <div class="label_rating_div">choose a rating:</div>
-            <div class="input_container">
-                <select name="ratings_5">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                </select>
-            </div>
-            <br>
-            <br>
-            <br>
-            <input type="submit" id = "submit_btn" name = "submit_btn" value="Recommend for me"></input>
-        </form>
+  </form>
+</div>
+<div id="id02" class="modal">
+  <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">&times;</span>
+  <form id = "sign_up_form" class="modal-content animate">
+    <div class="container">
+      <label><b>Username</b></label>
+      <input id = "s_username" type="text" placeholder="Enter username" name="s_username" required>
+
+      <label><b>Password</b></label>
+      <input id = "s_password_1" type="password" placeholder="Enter Password" name="s_password_1" required>
+
+      <label><b>Repeat Password</b></label>
+      <input id = "s_password_2" type="password" placeholder="Repeat Password" name="s_password_2" required>
+
+      <label><b>Email</b></label>
+      <input id = "s_email" type="text" placeholder="email" name="s_email" required>
+      <p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
+      <div id="message_2"></div>
+      <div class="clearfix">
+        <button type="button" onclick="document.getElementById('id02').style.display='none'" class="cancelbtn">Cancel</button>
+        <button id = "signup_button" type="submit" class="signupbtn">Sign Up</button>
+      </div>
     </div>
-    <div class="input_container">
-        <ul id = "ranks"><ul>
-    </div>
+  </form>
 </div>
 </body>
 </html>

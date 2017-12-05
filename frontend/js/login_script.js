@@ -2,12 +2,12 @@
 
 $(document).ready(function(){
     
-	$("#submit").click(function(){
+	$("#login_submit").click(function(){
 
 		var username = $("#myusername").val();
 		var password = $("#mypassword").val();
 		if((username == "") || (password == "")) {
-      		$("#message").html("<div class=\"alert alert-danger alert-dismissable\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button>Please enter a username and a password</div>");
+      		$("#message").html("<div>Please enter a username and a password</div>");
     	} else {
       		$.ajax({
         		type: "POST",
@@ -15,7 +15,7 @@ $(document).ready(function(){
         		data: "myusername="+username+"&mypassword="+password,
         		success: function(html){
           			if(html=='true') {
-            			window.location="index.php";
+            			window.location="user_input.php";
           			} else {
             			$("#message").html(html);
           			}
@@ -27,6 +27,31 @@ $(document).ready(function(){
     	}
     	return false;
   	});
+  $("#signup_button").click(function(){
+
+    var password_1 = $("#s_password_1").val();
+    var password_2 = $("#s_password_1").val();
+    if(password_1 != password_2) {
+          $("#message_2").html("<div>password not match</div>");
+      } else {
+          $.ajax({
+            type: "POST",
+            url: "signup.php",
+            data: $("#sign_up_form").serialize(),
+            success: function(html){
+                if(html=='true') {
+                  window.location="index.php";
+                } else {
+                  $("#message_2").html(html);
+                }
+            }/*,
+            beforeSend:function(){
+                $("#message").html("<p class='text-center'><img src='images/ajax-loader.gif'></p>")
+            }*/
+          });
+      }
+      return false;
+    });
 });
 /*function autocomplet() {
 	var min_length = 0; // min caracters to display the autocomplete
