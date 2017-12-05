@@ -77,13 +77,13 @@ def getUnseen(list1, list2):
 
     return temp1
 
-def load_rating_file_as_matrix(filename):
+def load_rating_file_as_matrix(filename, num_users, num_items):
     '''
     Read .rating file and Return dok matrix.
     The first line of .rating file is: num_users\t num_items
     '''
     # Get number of users and items
-    num_users, num_items = 6001, 65132
+    #num_users, num_items = 6001, 65132
     # with open(filename, "r") as f:
     #     line = f.readline()
     #     while line != None and line != "":
@@ -93,12 +93,20 @@ def load_rating_file_as_matrix(filename):
     #         num_items = max(num_items, i)
     #         line = f.readline()
     # Construct matrix
-    mat = sp.dok_matrix((num_users + 2, num_items + 1), dtype=np.float32)
+    mat = sp.dok_matrix((num_users + 1, num_items + 1), dtype=np.float32)
+    # with open("Data/10m.train.rating", "r") as f:
+    #     line = f.readline()
+    #     while line != None and line != "":
+    #         arr = line.split("\t")
+    #         user, item, rating = int(arr[0]), int(arr[1]), float(arr[2])
+    #         if (rating > 0):
+    #             mat[user, item] = 1.0
+    #         line = f.readline()
     with open(filename, "r") as f:
         line = f.readline()
         while line != None and line != "":
-            arr = line.split("\t")
-            user, item, rating = int(arr[0]), int(arr[1]), float(arr[2])
+            arr = line.split(",")
+            user, item, rating = 6001, int(arr[0]), float(arr[1])
             if (rating > 0):
                 mat[user, item] = 1.0
             line = f.readline()
@@ -110,8 +118,8 @@ def load_rating_file_as_list(filename):
     with open(filename, "r") as f:
         line = f.readline()
         while line != None and line != "":
-            arr = line.split("\t")
-            item = int(arr[1])
+            arr = line.split(",")
+            item = int(arr[0])
             ratingList.append(item)
             line = f.readline()
     return ratingList
@@ -149,6 +157,8 @@ def get_model(num_users, num_items, mf_dim=10, layers=[10], reg_layers=[0], reg_
     for idx in xrange(1, num_layer):
         layer = Dense(layers[idx], W_regularizer= l2(reg_layers[idx]), activation='relu', name="layer%d" %idx)
         mlp_vector = layer(mlp_vector)
+        mlp_vector = Dropout(0.3)(mlp_vector)
+
 
     # Concatenate MF and MLP parts
     #mf_vector = Lambda(lambda x: x * alpha)(mf_vector)
@@ -294,8 +304,15 @@ if __name__ == '__main__':
         if args.out > 0:
             print("The best NeuMF model is saved to %s" % (model_out_file))
     if mode=='predict':
-        model = get_model(6002, 65134, 8, [64, 32, 16, 8], [0, 0, 0, 0], 0.0)
-
+        num_users = 6001
+        num_items = 65230
+        mf_dim = 8
+        layers = [64, 32, 16, 8]
+        reg_layers = [0, 0, 0, 0]
+        reg_mf = 0
+        learning_rate = 0.006
+        #num_users, num_items, mf_dim, layers, reg_layers, reg_mf
+        model = get_model(num_users+1, num_items+1, mf_dim, layers, reg_layers, reg_mf)
         movie = 'Data/movies.dat'
         movies = []
         with open(movie, "r") as f:
@@ -313,36 +330,53 @@ if __name__ == '__main__':
             model.compile(optimizer=Adam(lr=learning_rate), loss='binary_crossentropy')
         else:
             model.compile(optimizer=SGD(lr=learning_rate), loss='binary_crossentropy')
-        num_users = 6002
-        num_items = 65134
+        # num_users = 6002
+        # num_items = 65134
         t1 = time()
         #model.load_weights('Pretrain/ml-1m_NeuMF_8_[64,32,16,8]_1511548120.h5')
-        model.load_weights('Pretrain/10m_NeuMF_8_[64,32,16,8]_1511676171.h5')
+        model.load_weights('Pretrain/10m_NeuMF_8_[64,32,16,8]_1512435509.h5')
         t2 = time()
         print(t2 - t1)
         # Training model
-        train = load_rating_file_as_matrix('Data/input.rating')
-        item_1 = load_rating_file_as_list('Data/input.rating')
+        train = load_rating_file_as_matrix('Data/test.csv', num_users, num_items)
+        item_1 = load_rating_file_as_list('Data/test.csv')
+        print(time() - t2)
         userid = 6001
         user_input, item_input, labels = get_train_instances(train, 4)
-        for i in range(100):
+        for i in range(20):
             model.fit([np.array(user_input), np.array(item_input)],  # input
                   np.array(labels),  # labels
                   batch_size=256, nb_epoch=1, verbose=0, shuffle=True)
         #itemlist = Unseen.getList(65132, item_1)
         itemlist = getUnseen(movies, item_1)
-        # print(itemlist)
+        #print(len(itemlist))
         items = np.array(itemlist)
         #print(items)
         users = np.full(len(items), userid, dtype="int32")
         predictions = model.predict([users, items], batch_size=100, verbose=0)
         map = {}
+        #[480, 527, 593, 356, 780, 648, 110, 50, 1210, 150]
+        movies = {}
+        with open("Data/movies.csv", "r") as f1:
+            line = f1.readline()
+            while line != None and line != "":
+                arr = line.split(",")
+                idx, gen = int(arr[0]), str(arr[arr.__len__()-1])
+                movies[idx] = gen
+                line = f1.readline()
+
         for i in xrange(len(items)):
             item = items[i]
             map[item] = predictions[i]
         ranklist = heapq.nlargest(10, map, key=map.get)
+        #print(ranklist)
         with open("Output/rank.txt", "w") as f:
-            f.write(str(ranklist))
+            temp = []
+            for i in range(10):
+                temp.append(ranklist[i])
+                print("{0}:{1}".format(ranklist[i],movies[ranklist[i]]))
+            f.write(str(temp))
         t3 = time()
         print(t3 - t2)
-        print(ranklist)
+        #print(temp)
+        #print(ranklist)
